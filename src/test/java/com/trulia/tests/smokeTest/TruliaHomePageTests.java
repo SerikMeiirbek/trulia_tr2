@@ -14,8 +14,9 @@ public class TruliaHomePageTests extends TestBase{
 	@Test(priority = 0)
 	public void searchTest() throws InterruptedException  {
 		
+		
 		assertTrue(trulia.isAt());
-		assertTrue(trulia.verifyTitle());
+		assertTrue(trulia.verifyTitle("trulia"));
 		assertTrue(trulia.searchField.isDisplayed());
 		assertTrue(trulia.searchButton.isDisplayed());
 		assertTrue(trulia.isButtonClickable());
@@ -23,7 +24,7 @@ public class TruliaHomePageTests extends TestBase{
 		BrowserUtils.waitFor(2);
 		assertTrue(trulia.verifyTheTitleSearchField());
 
-		assertTrue(trulia.verifyAutoSuggestions());
+		assertTrue(trulia.verifyListedResults());
 		
 	}
 	

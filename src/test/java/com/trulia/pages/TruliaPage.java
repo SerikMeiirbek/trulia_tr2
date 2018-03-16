@@ -1,5 +1,6 @@
 package com.trulia.pages;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -16,7 +17,7 @@ public class TruliaPage {
 	String str = "Pittsburgh, PA";
 	String str2 = "Gaithersburg";
 	String str3 = "Boston";
-
+	
 	public TruliaPage() {
 		this.driver = Driver.getDriver();
 		PageFactory.initElements(driver, this);
@@ -33,6 +34,9 @@ public class TruliaPage {
 
 	@FindBy(xpath = "//button[@class='css-aks6px btn btnLrg btnSecondary baz typeEmphasize pvs btnSelected']")
 	public WebElement buttonBuy;
+	
+	@FindBy(xpath ="//li[@role='option']")
+	public List<WebElement> options;
 
 	public boolean isAt() {
 		// System.out.println(calculator.getMonthlyBillAmount());
@@ -53,8 +57,9 @@ public class TruliaPage {
 		}
 	}
 
-	public boolean verifyTitle() {
-		return driver.getTitle().toLowerCase().contains("trulia");
+	
+	public boolean verifyTitle(String str) {
+		return driver.getTitle().toLowerCase().contains(str.toLowerCase());
 
 	}
 
@@ -94,35 +99,47 @@ public class TruliaPage {
 
 	}
 
-	public boolean verifyAutoSuggestions() {
-		searchField.clear();
-		searchField.sendKeys(str3);
+	public boolean verifyListedResults() {
+//		searchField.clear();
+//		searchField.sendKeys(str3);
 		BrowserUtils.waitFor(1);
 		List<WebElement> elements = driver.findElements(By.xpath("//div[@class='addressDetail']"));
 		for (WebElement webElement : elements) {
-			if (checkEachWord(str3, webElement)) {
+			if (webElement.getText().trim().toLowerCase().contains(str.toLowerCase())) {
 				return true;
 			}
 		}
 		return false;
-
 	}
 
 	public boolean checkEachWord(String str, WebElement webElement) {
 		String[] arr = str.split(" ");
+		
+		System.out.println(Arrays.toString(arr));
+		
 		if (arr.length > 1) {
 			for (String string : arr) {
-				if (string.toLowerCase().contains(webElement.getText().toLowerCase())) {
+				if (string.toLowerCase().trim().contains(webElement.getText().toLowerCase())) {
 					return true;
 				}
 			}
 		} else {
-			if (str.toLowerCase().contains(webElement.getText().toLowerCase())) {
+			if (str.toLowerCase().contains(webElement.getText().toLowerCase().trim())) {
 				return true;
 			}
 
 		}
 		return false;
 	}
+	
+
+	public String selectCityOption(String city) {
+	
+	for (WebElement webElement : options) {
+		System.out.println(webElement.getText());
+	}
+	
+	return null;
+}
 
 }
