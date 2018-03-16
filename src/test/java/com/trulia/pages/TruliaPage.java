@@ -33,6 +33,11 @@ public class TruliaPage {
 
 	@FindBy(xpath = "//button[@class='css-aks6px btn btnLrg btnSecondary baz typeEmphasize pvs btnSelected']")
 	public WebElement buttonBuy;
+	
+	@FindBy(className = "addressDetail")
+	public List<WebElement> addressDetails;
+	
+	
 
 	public boolean isAt() {
 		// System.out.println(calculator.getMonthlyBillAmount());
@@ -95,12 +100,11 @@ public class TruliaPage {
 	}
 
 	public boolean verifyAutoSuggestions() {
-		searchField.clear();
-		searchField.sendKeys(str3);
-		BrowserUtils.waitFor(1);
-		List<WebElement> elements = driver.findElements(By.xpath("//div[@class='addressDetail']"));
-		for (WebElement webElement : elements) {
-			if (checkEachWord(str3, webElement)) {
+//		searchField.clear();
+//		searchField.sendKeys(str3);
+//		BrowserUtils.waitFor(1);
+		for (WebElement element : addressDetails) {
+			if (element.getText().contains(str)) {
 				return true;
 			}
 		}
