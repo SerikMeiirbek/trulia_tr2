@@ -8,22 +8,29 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.trulia.utilities.BrowserUtils;
 import com.trulia.utilities.Driver;
 
 public class TruliaPage {
 	private WebDriver driver;
-	String str = "Pittsburgh, PA";
+	String str = "Boston, MA";
 	String str2 = "Gaithersburg";
 	String str3 = "Boston";
-	
+	String homePageTitle = "Trulia: Real Estate Listings, Homes For Sale, Housing Data";
+
 	public TruliaPage() {
 		this.driver = Driver.getDriver();
 		PageFactory.initElements(driver, this);
 	}
+	
+	public WebDriver getDriver() {
+		return driver;
+	}
 
-	@FindBy(id="searchBox")
+	@FindBy(id = "searchBox")
 	public WebElement searchField;
 
 	@FindBy(xpath = "//button[@class='css-ejw4np btn btnPrimary']")
@@ -38,9 +45,34 @@ public class TruliaPage {
 	@FindBy(xpath ="//li[@role='option']")
 	public List<WebElement> options;
 
+	@FindBy(className = "addressDetail") 
+	public List<WebElement> addressDetails;
+
+	public WebElement selectedOption;
+	
+	
+	public List<WebElement> waitForVisibility(List<WebElement> elements, int timeToWaitInSec) {
+		WebDriverWait wait = new WebDriverWait(driver, timeToWaitInSec);
+		return wait.until(ExpectedConditions.visibilityOfAllElements(elements));
+	}
+	
+	public boolean waitForEmptyField(WebElement element, int timeToWaitInSec) {
+		WebDriverWait wait = new WebDriverWait(driver, timeToWaitInSec);
+		return wait.until(ExpectedConditions.attributeToBe(element, "value", ""));
+	}
+
+	public boolean selectCityOption(String city) {
+		for (WebElement element : options) {
+			if (element.getText().contains(city)) {
+				selectedOption = element;
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean isAt() {
 		// System.out.println(calculator.getMonthlyBillAmount());
-	
 		return driver.getTitle().equals("Trulia: Real Estate Listings, Homes For Sale, Housing Data");
 
 	}
@@ -57,9 +89,9 @@ public class TruliaPage {
 		}
 	}
 
-	
-	public boolean verifyTitle(String str) {
-		return driver.getTitle().toLowerCase().contains(str.toLowerCase());
+
+	public boolean verifyTitle(String text) {
+		return driver.getTitle().contains(text);
 
 	}
 
@@ -109,7 +141,21 @@ public class TruliaPage {
 				return true;
 			}
 		}
-		return false;
+			return false;
+		}
+
+	public boolean verifyAutoSuggestions(String city) {
+		// searchField.clear();
+		// searchField.sendKeys(str3);
+		// BrowserUtils.waitFor(1);
+		boolean result = false;
+		
+		for (WebElement element : addressDetails) {
+			if (element.getText().contains(city)) {
+				result = true;
+			}
+		}
+		return result;
 	}
 
 	public boolean checkEachWord(String str, WebElement webElement) {
@@ -123,23 +169,12 @@ public class TruliaPage {
 					return true;
 				}
 			}
-		} else {
-			if (str.toLowerCase().contains(webElement.getText().toLowerCase().trim())) {
+		} else if (str.toLowerCase().contains(webElement.getText().toLowerCase().trim())) {
 				return true;
 			}
 
-		}
+
 		return false;
 	}
-	
-
-	public String selectCityOption(String city) {
-	
-	for (WebElement webElement : options) {
-		System.out.println(webElement.getText());
-	}
-	
-	return null;
-}
 
 }
