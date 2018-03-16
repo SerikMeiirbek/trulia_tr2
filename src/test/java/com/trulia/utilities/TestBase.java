@@ -16,9 +16,11 @@ public class TestBase {
 		driver.get(ConfigurationReader.getProperty("url"));
 	}
 
+	
 	//@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		Driver.closeDriver();
+		
 	}
 
 
