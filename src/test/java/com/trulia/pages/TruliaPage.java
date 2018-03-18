@@ -145,9 +145,6 @@ public class TruliaPage {
 		}
 
 	public boolean verifyAutoSuggestions(String city) {
-		// searchField.clear();
-		// searchField.sendKeys(str3);
-		// BrowserUtils.waitFor(1);
 		boolean result = false;
 		
 		for (WebElement element : addressDetails) {
