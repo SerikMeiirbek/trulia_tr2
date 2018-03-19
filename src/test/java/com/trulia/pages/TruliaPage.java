@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.trulia.utilities.BrowserUtils;
@@ -42,7 +43,7 @@ public class TruliaPage {
 	@FindBy(xpath = "//button[@class='css-aks6px btn btnLrg btnSecondary baz typeEmphasize pvs btnSelected']")
 	public WebElement buttonBuy;
 	
-	@FindBy(xpath ="//li[@role='option']")
+	@FindBy(xpath ="//ul[@role='listbox']//div[@class='typeEmphasize typeTruncate']")
 	public List<WebElement> options;
 
 	@FindBy(className = "addressDetail") 
@@ -50,29 +51,25 @@ public class TruliaPage {
 
 	public WebElement selectedOption;
 	
-	
-	public List<WebElement> waitForVisibility(List<WebElement> elements, int timeToWaitInSec) {
-		WebDriverWait wait = new WebDriverWait(driver, timeToWaitInSec);
-		return wait.until(ExpectedConditions.visibilityOfAllElements(elements));
-	}
+	@FindBy(xpath = "//ul[@role='listbox']")
+	public WebElement searchList;
 	
 	public boolean waitForEmptyField(WebElement element, int timeToWaitInSec) {
 		WebDriverWait wait = new WebDriverWait(driver, timeToWaitInSec);
 		return wait.until(ExpectedConditions.attributeToBe(element, "value", ""));
 	}
 
-	public boolean selectCityOption(String city) {
+	public void selectCityOption(String city) {		
 		for (WebElement element : options) {
-			if (element.getText().contains(city)) {
-				selectedOption = element;
-				return true;
+			System.out.println(element.getText());
+			if (element.getText().equals(city)) {
+				element.click();
+				return;
 			}
 		}
-		return false;
 	}
 
 	public boolean isAt() {
-		// System.out.println(calculator.getMonthlyBillAmount());
 		return driver.getTitle().equals("Trulia: Real Estate Listings, Homes For Sale, Housing Data");
 
 	}
@@ -91,7 +88,7 @@ public class TruliaPage {
 
 
 	public boolean verifyTitle(String text) {
-		return driver.getTitle().contains(text);
+		return driver.getTitle().toLowerCase().contains(text.toLowerCase());
 
 	}
 

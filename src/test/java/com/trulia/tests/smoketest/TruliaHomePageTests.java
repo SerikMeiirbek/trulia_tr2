@@ -1,4 +1,4 @@
-package com.trulia.tests.smokeTest;
+package com.trulia.tests.smoketest;
 
 import static org.testng.Assert.*;
 
@@ -15,7 +15,6 @@ public class TruliaHomePageTests extends TestBase{
 	
 	@Test(priority = 0)
 	public void searchTest() throws InterruptedException  {
-		
 		assertTrue(trulia.isAt());
 		assertTrue(trulia.verifyTitle("trulia"));
 		assertTrue(trulia.verifyTitle("Trulia: Real Estate Listings, Homes For Sale, Housing Data"));
@@ -30,7 +29,7 @@ public class TruliaHomePageTests extends TestBase{
 		
 	}
 	
-	//@Test(priority = 1)
+	@Test(priority = 1)
 	public void AsUser() {
 		trulia.getHomePage();
 		BrowserUtils.waitFor(2);

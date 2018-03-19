@@ -1,13 +1,19 @@
-package com.trulia.tests.functionalTest;
+package com.trulia.tests.functionaltest;
 
 import static org.testng.Assert.*;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.trulia.pages.ResultPage;
 import com.trulia.pages.TruliaPage;
 import com.trulia.utilities.BrowserUtils;
+import com.trulia.utilities.ConfigurationReader;
+import com.trulia.utilities.Driver;
 import com.trulia.utilities.TestBase;
 
 
@@ -17,10 +23,16 @@ public class TruliaTest extends TestBase {
 	String city = "Boston, MA";	
 	String zipCode = "02601";
 	String city2 = "Washington, DC";
-	String neighborhood = "Park Place";
+	String neighborhood = "Park Place Norfolk";
+
+	@BeforeMethod
+	public void navigate() {
+		driver.get(ConfigurationReader.getProperty("url"));
+	}
 	
 	@Test(priority = 0)
 	public void searchByCity() {
+		assertTrue(trulia.isAt());
 		assertTrue(trulia.buttonBuy.isDisplayed());
 		assertEquals(trulia.getDriver().getTitle(), "Trulia: Real Estate Listings, Homes For Sale, Housing Data");
 		assertTrue(trulia.searchField.isDisplayed());
@@ -29,9 +41,8 @@ public class TruliaTest extends TestBase {
 		trulia.searchField.clear();
 		assertTrue(trulia.waitForEmptyField(trulia.searchField, 2));
 		trulia.searchField.sendKeys(city);
-		trulia.waitForVisibility(trulia.options, 2);
-		assertTrue(trulia.selectCityOption(city));
-		trulia.selectedOption.click();
+		BrowserUtils.waitForVisibility(trulia.searchList, 5);
+		trulia.selectCityOption(city);
 		
 		// Verify all houses are located in Boston, MA
 		resultPage.waitForVisibility(resultPage.homeType, 2);
@@ -47,6 +58,7 @@ public class TruliaTest extends TestBase {
 	
 	@Test(priority = 1)
 	public void searchByZipCode() {
+		assertTrue(trulia.isAt());
 		assertTrue(trulia.buttonBuy.isDisplayed());
 		assertEquals(trulia.getDriver().getTitle(), "Trulia: Real Estate Listings, Homes For Sale, Housing Data");
 		assertTrue(trulia.searchField.isDisplayed());
@@ -55,8 +67,8 @@ public class TruliaTest extends TestBase {
 		trulia.searchField.clear();
 		assertTrue(trulia.waitForEmptyField(trulia.searchField, 2));
 		trulia.searchField.sendKeys(zipCode);
-		assertTrue(trulia.selectCityOption(zipCode));
-		trulia.selectedOption.click();
+		assertTrue(trulia.searchList.isDisplayed());
+		trulia.selectCityOption(zipCode);
 		
 		resultPage.waitForVisibility(resultPage.homeType, 2);
 		assertTrue(resultPage.isAt());
@@ -72,6 +84,7 @@ public class TruliaTest extends TestBase {
 	
 	@Test(priority = 2)
 	public void filterByNumberOfBeds() {
+		assertTrue(trulia.isAt());
 		assertTrue(trulia.buttonBuy.isDisplayed());
 		assertEquals(trulia.getDriver().getTitle(), "Trulia: Real Estate Listings, Homes For Sale, Housing Data");
 		assertTrue(trulia.searchField.isDisplayed());
@@ -79,10 +92,9 @@ public class TruliaTest extends TestBase {
 		
 		trulia.searchField.clear();
 		assertTrue(trulia.waitForEmptyField(trulia.searchField, 2));
-		trulia.searchField.sendKeys(city2);
-		trulia.waitForVisibility(trulia.options, 2);
-		assertTrue(trulia.selectCityOption(city2));
-		trulia.selectedOption.click();
+		trulia.searchField.sendKeys("Washington DC");
+		BrowserUtils.waitForVisibility(trulia.searchList, 5);
+		trulia.selectCityOption(city2);
 		
 		resultPage.waitForVisibility(resultPage.homeType, 2);
 		assertTrue(resultPage.isAt());
@@ -94,13 +106,15 @@ public class TruliaTest extends TestBase {
 		resultPage.allBeds.click();
 		assertEquals(resultPage.bedOptions.size(), 5);
 		resultPage.moreThan2Beds.click();
-		resultPage.waitForVisibility(resultPage.bedsResults, 5);
+//		BrowserUtils.waitForVisibility(resultPage.bedsResults, 5);
+		BrowserUtils.waitFor(2);
 		assertTrue(resultPage.countBeds(2));
 		
 	}
 	
 	@Test(priority = 3)
 	public void searchByNeighborhood() {
+		assertTrue(trulia.isAt());
 		assertTrue(trulia.buttonBuy.isDisplayed());
 		assertEquals(trulia.getDriver().getTitle(), "Trulia: Real Estate Listings, Homes For Sale, Housing Data");
 		assertTrue(trulia.searchField.isDisplayed());
@@ -109,10 +123,9 @@ public class TruliaTest extends TestBase {
 		trulia.searchField.clear();
 		assertTrue(trulia.waitForEmptyField(trulia.searchField, 2));
 		trulia.searchField.sendKeys(neighborhood);
-		trulia.waitForVisibility(trulia.options, 2);
+		BrowserUtils.waitForVisibility(trulia.searchList, 2);
 		String expected = "Park Place, Norfolk, VA";
-		assertTrue(trulia.selectCityOption(expected));
-		trulia.selectedOption.click();
+		trulia.selectCityOption(expected);
 		
 		resultPage.waitForVisibility(resultPage.homeType, 2);
 		assertTrue(resultPage.isAt());
@@ -124,7 +137,8 @@ public class TruliaTest extends TestBase {
 		resultPage.allBeds.click();
 		assertEquals(resultPage.bedOptions.size(), 5);
 		resultPage.moreThan4Beds.click();
-		resultPage.waitForVisibility(resultPage.bedsResults, 5);
+//		BrowserUtils.waitForVisibility(resultPage.bedsResults, 5);
+		BrowserUtils.waitFor(2);
 		assertTrue(resultPage.countBeds(4));
 	}
 	

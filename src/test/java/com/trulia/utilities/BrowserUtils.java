@@ -21,7 +21,12 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BrowserUtils {
-	private static WebDriver driver;
+	private static WebDriver driver = Driver.getDriver();
+	
+	public static List<WebElement> waitForVisibility(List<WebElement> elements, int timeToWaitInSec) {
+		WebDriverWait wait = new WebDriverWait(driver, timeToWaitInSec);
+		return wait.until(ExpectedConditions.visibilityOfAllElements(elements));
+	}
 
 	public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) {
 		WebDriverWait wait = new WebDriverWait(driver, timeToWaitInSec);
