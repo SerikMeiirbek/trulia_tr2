@@ -46,9 +46,6 @@ public class TruliaPage {
 	@FindBy(xpath ="//ul[@role='listbox']//div[@class='typeEmphasize typeTruncate']")
 	public List<WebElement> options;
 
-	@FindBy(className = "addressDetail") 
-	public List<WebElement> addressDetails;
-
 	public WebElement selectedOption;
 	
 	@FindBy(xpath = "//ul[@role='listbox']")
@@ -56,6 +53,9 @@ public class TruliaPage {
 	
 	@FindBy(xpath = "//div[@class='typeEmphasize typeTruncate']")
 	public WebElement searchExpected;
+	
+	@FindBy(xpath = "//div[@class='mediaImg mediaImgExt typeLowlight']")
+	public WebElement propertyType;
 	
 	public boolean waitForEmptyField(WebElement element, int timeToWaitInSec) {
 		WebDriverWait wait = new WebDriverWait(driver, timeToWaitInSec);
@@ -111,7 +111,8 @@ public class TruliaPage {
 
 	public boolean isButtonClickable2() {
 		searchField.clear();
-		searchField.sendKeys(str2);
+		if (searchField.getAttribute("value").equals(""))
+			searchField.sendKeys(str2);
 
 		try {
 			searchButton.click();
@@ -143,17 +144,6 @@ public class TruliaPage {
 		}
 			return false;
 		}
-
-	public boolean verifyAutoSuggestions(String city) {
-		boolean result = false;
-		
-		for (WebElement element : addressDetails) {
-			if (element.getText().contains(city)) {
-				result = true;
-			}
-		}
-		return result;
-	}
 
 	public boolean checkEachWord(String str, WebElement webElement) {
 		String[] arr = str.split(" ");

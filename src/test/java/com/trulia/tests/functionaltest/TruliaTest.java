@@ -30,8 +30,8 @@ public class TruliaTest extends TestBase {
 		driver.get(ConfigurationReader.getProperty("url"));
 	}
 	
-	@Test(priority = 0)
-	public void searchByCity() {
+	@Test(priority = 0, description="TC001")
+	public void searchBCity() {
 		assertTrue(trulia.isAt());
 		assertTrue(trulia.buttonBuy.isDisplayed());
 		assertEquals(trulia.getDriver().getTitle(), "Trulia: Real Estate Listings, Homes For Sale, Housing Data");
@@ -49,7 +49,7 @@ public class TruliaTest extends TestBase {
 		resultPage.waitForVisibility(resultPage.homeType, 2);
 		assertTrue(resultPage.isAt());
 		assertEquals(trulia.getDriver().getTitle(), "Boston, MA Real Estate & Homes For Sale | Trulia");
-		assertTrue(trulia.verifyAutoSuggestions(city));
+		assertTrue(resultPage.verifyAutoSuggestions(city));
 		
 		resultPage.homeType.click();
 		resultPage.Condo.click();
@@ -57,7 +57,7 @@ public class TruliaTest extends TestBase {
 		assertEquals(resultPage.homeType.getText(), "Condo");
 	}
 	
-	@Test(priority = 1)
+	@Test(priority = 1, description="TC002")
 	public void searchByZipCode() {
 		assertTrue(trulia.isAt());
 		assertTrue(trulia.buttonBuy.isDisplayed());
@@ -75,7 +75,7 @@ public class TruliaTest extends TestBase {
 		resultPage.waitForVisibility(resultPage.homeType, 2);
 		assertTrue(resultPage.isAt());
 		assertEquals(trulia.getDriver().getTitle(), "02601 Real Estate & Homes For Sale | Trulia");
-		assertTrue(trulia.verifyAutoSuggestions("Hyannis")); 	// ZIP code 02601 is located in Hyannis, Massachusetts.
+		assertTrue(resultPage.verifyAutoSuggestions("Hyannis")); 	// ZIP code 02601 is located in Hyannis, Massachusetts.
 		
 		assertTrue(resultPage.homeType.isDisplayed());
 		resultPage.homeType.click();
@@ -84,7 +84,7 @@ public class TruliaTest extends TestBase {
 		
 	}
 	
-	@Test(priority = 2)
+	@Test(priority = 2, description="TC003")
 	public void filterByNumberOfBeds() {
 		assertTrue(trulia.isAt());
 		assertTrue(trulia.buttonBuy.isDisplayed());
@@ -102,7 +102,7 @@ public class TruliaTest extends TestBase {
 		resultPage.waitForVisibility(resultPage.homeType, 2);
 		assertTrue(resultPage.isAt());
 		assertEquals(trulia.getDriver().getTitle(), "Washington, DC Real Estate & Homes For Sale | Trulia");
-		assertTrue(trulia.verifyAutoSuggestions(city2));
+		assertTrue(resultPage.verifyAutoSuggestions(city2));
 		
 		assertTrue(resultPage.homeType.isDisplayed());
 		assertTrue(resultPage.allBeds.isDisplayed());
@@ -114,7 +114,7 @@ public class TruliaTest extends TestBase {
 		
 	}
 	
-	@Test(priority = 3)
+	@Test(priority = 3, description="TC004")
 	public void searchByNeighborhood() {
 		assertTrue(trulia.isAt());
 		assertTrue(trulia.buttonBuy.isDisplayed());
@@ -133,7 +133,7 @@ public class TruliaTest extends TestBase {
 		resultPage.waitForVisibility(resultPage.homeType, 2);
 		assertTrue(resultPage.isAt());
 		assertEquals(trulia.getDriver().getTitle(), "Park Place, Norfolk, VA Real Estate & Homes For Sale | Trulia");
-		assertTrue(trulia.verifyAutoSuggestions(expected));
+		assertTrue(resultPage.verifyAutoSuggestions(expected));
 		
 		assertTrue(resultPage.homeType.isDisplayed());
 		assertTrue(resultPage.allBeds.isDisplayed());

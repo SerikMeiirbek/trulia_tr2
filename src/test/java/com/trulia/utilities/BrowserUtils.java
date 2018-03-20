@@ -28,11 +28,6 @@ public class BrowserUtils {
 		return wait.until(ExpectedConditions.textToBePresentInElement(element, text));
 	}
 	
-//	public static boolean waitForEmptyField(WebElement element, int timeToWaitInSec) {
-//		WebDriverWait wait = new WebDriverWait(driver, timeToWaitInSec);
-//		return wait.until(ExpectedConditions.attributeToBe(element, "value", ""));
-//	}
-	
 	public static List<WebElement> waitForVisibility(List<WebElement> elements, int timeToWaitInSec) {
 		WebDriverWait wait = new WebDriverWait(driver, timeToWaitInSec);
 		return wait.until(ExpectedConditions.visibilityOfAllElements(elements));

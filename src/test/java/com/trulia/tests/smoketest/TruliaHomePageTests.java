@@ -4,6 +4,7 @@ import static org.testng.Assert.*;
 
 import org.testng.annotations.Test;
 
+import com.trulia.pages.ResultPage;
 import com.trulia.pages.TruliaPage;
 import com.trulia.utilities.BrowserUtils;
 import com.trulia.utilities.TestBase;
@@ -11,6 +12,7 @@ import com.trulia.utilities.TestBase;
 
 public class TruliaHomePageTests extends TestBase{
 	TruliaPage trulia =new TruliaPage();
+	ResultPage resultPage = new ResultPage();
 	String city = "Boston, MA";	
 	
 	@Test(priority = 0)
@@ -25,7 +27,7 @@ public class TruliaHomePageTests extends TestBase{
 		BrowserUtils.waitFor(2);
 		assertTrue(trulia.verifyTheTitleSearchField());
 		assertTrue(trulia.verifyListedResults());
-		assertTrue(trulia.verifyAutoSuggestions(city));
+		assertTrue(resultPage.verifyAutoSuggestions(city));
 		
 	}
 	
@@ -40,10 +42,7 @@ public class TruliaHomePageTests extends TestBase{
 		
 		BrowserUtils.waitFor(2);
 		assertTrue(trulia.verifyTheTitleSearchField2());
-
 		assertTrue(trulia.verifySearchResults2());
-		
-		
 	}
 	
 }

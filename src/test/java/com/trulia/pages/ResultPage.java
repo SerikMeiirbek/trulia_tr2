@@ -51,6 +51,29 @@ public class ResultPage {
 	@FindBy(xpath = "//button[text() = '4+']") 
 	public WebElement moreThan4Beds;
 	
+	@FindBy(className = "addressDetail") 
+	public List<WebElement> addressDetails;
+	
+	@FindBy(tagName = "h1")
+	public WebElement housrAddress;
+	
+	@FindBy(xpath = "//h3[@class='h3 mtn']") 
+	public WebElement houseAddressText;
+	
+	@FindBy(xpath = "//ul[@class='listInlineBulleted man pts ptXxsHidden pbsXxsVisible']") 
+	public WebElement houseDetialsText;
+	
+	@FindBy(tagName = "h2")
+	public WebElement notMatchText;
+	
+	@FindBy(xpath = "//h6[@class='typeLowlight']") 
+	public WebElement zeroResults;
+	
+	public int found() {
+		return Integer.parseInt(zeroResults.getText().substring(0, 1));
+		
+	}
+	
 	public boolean isAt() {
 		return h2.getText().contains("homes available on Trulia");
 	}
@@ -75,6 +98,17 @@ public class ResultPage {
 		}
 		
 		return true;
+	}
+	
+	public boolean verifyAutoSuggestions(String city) {
+		boolean result = false;
+		
+		for (WebElement element : addressDetails) {
+			if (element.getText().contains(city)) {
+				result = true;
+			}
+		}
+		return result;
 	}
 
 }
