@@ -60,11 +60,6 @@ public class ResultPage {
 		return wait.until(ExpectedConditions.visibilityOf(element));
 	}
 	
-//	public List<WebElement> waitForVisibility(List<WebElement> elements, int timeToWaitInSec) {
-//		WebDriverWait wait = new WebDriverWait(driver, timeToWaitInSec);
-//		return wait.until(ExpectedConditions.visibilityOfAllElements(elements));
-//	}
-	
 	public int countOptions(List<WebElement> elements) {
 		return elements.size();
 	}

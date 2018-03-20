@@ -39,9 +39,10 @@ public class TruliaTest extends TestBase {
 		assertTrue(trulia.searchButton.isDisplayed());	
 		
 		trulia.searchField.clear();
-		assertTrue(trulia.waitForEmptyField(trulia.searchField, 2));
+		assertTrue(trulia.searchField.getAttribute("value").equals(""));
 		trulia.searchField.sendKeys(city);
 		BrowserUtils.waitForVisibility(trulia.searchList, 5);
+		BrowserUtils.waitForTextVisibility(trulia.searchExpected, 2, city);
 		trulia.selectCityOption(city);
 		
 		// Verify all houses are located in Boston, MA
@@ -65,9 +66,10 @@ public class TruliaTest extends TestBase {
 		assertTrue(trulia.searchButton.isDisplayed());
 		
 		trulia.searchField.clear();
-		assertTrue(trulia.waitForEmptyField(trulia.searchField, 2));
+		assertTrue(trulia.searchField.getAttribute("value").equals(""));
 		trulia.searchField.sendKeys(zipCode);
 		assertTrue(trulia.searchList.isDisplayed());
+		BrowserUtils.waitForTextVisibility(trulia.searchExpected, 2, zipCode);
 		trulia.selectCityOption(zipCode);
 		
 		resultPage.waitForVisibility(resultPage.homeType, 2);
@@ -91,9 +93,10 @@ public class TruliaTest extends TestBase {
 		assertTrue(trulia.searchButton.isDisplayed());	
 		
 		trulia.searchField.clear();
-		assertTrue(trulia.waitForEmptyField(trulia.searchField, 2));
+		assertTrue(trulia.searchField.getAttribute("value").equals(""));
 		trulia.searchField.sendKeys("Washington DC");
 		BrowserUtils.waitForVisibility(trulia.searchList, 5);
+		BrowserUtils.waitForTextVisibility(trulia.searchExpected, 2, city2);
 		trulia.selectCityOption(city2);
 		
 		resultPage.waitForVisibility(resultPage.homeType, 2);
@@ -106,7 +109,6 @@ public class TruliaTest extends TestBase {
 		resultPage.allBeds.click();
 		assertEquals(resultPage.bedOptions.size(), 5);
 		resultPage.moreThan2Beds.click();
-//		BrowserUtils.waitForVisibility(resultPage.bedsResults, 5);
 		BrowserUtils.waitFor(2);
 		assertTrue(resultPage.countBeds(2));
 		
@@ -121,10 +123,11 @@ public class TruliaTest extends TestBase {
 		assertTrue(trulia.searchButton.isDisplayed());	
 		
 		trulia.searchField.clear();
-		assertTrue(trulia.waitForEmptyField(trulia.searchField, 2));
+		assertTrue(trulia.searchField.getAttribute("value").equals(""));
 		trulia.searchField.sendKeys(neighborhood);
 		BrowserUtils.waitForVisibility(trulia.searchList, 2);
 		String expected = "Park Place, Norfolk, VA";
+		BrowserUtils.waitForTextVisibility(trulia.searchExpected, 2, expected);
 		trulia.selectCityOption(expected);
 		
 		resultPage.waitForVisibility(resultPage.homeType, 2);
@@ -137,7 +140,6 @@ public class TruliaTest extends TestBase {
 		resultPage.allBeds.click();
 		assertEquals(resultPage.bedOptions.size(), 5);
 		resultPage.moreThan4Beds.click();
-//		BrowserUtils.waitForVisibility(resultPage.bedsResults, 5);
 		BrowserUtils.waitFor(2);
 		assertTrue(resultPage.countBeds(4));
 	}

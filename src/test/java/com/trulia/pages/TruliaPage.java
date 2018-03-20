@@ -54,6 +54,9 @@ public class TruliaPage {
 	@FindBy(xpath = "//ul[@role='listbox']")
 	public WebElement searchList;
 	
+	@FindBy(xpath = "//div[@class='typeEmphasize typeTruncate']")
+	public WebElement searchExpected;
+	
 	public boolean waitForEmptyField(WebElement element, int timeToWaitInSec) {
 		WebDriverWait wait = new WebDriverWait(driver, timeToWaitInSec);
 		return wait.until(ExpectedConditions.attributeToBe(element, "value", ""));
@@ -61,7 +64,7 @@ public class TruliaPage {
 
 	public void selectCityOption(String city) {		
 		for (WebElement element : options) {
-			System.out.println(element.getText());
+//			System.out.println(element.getText());
 			if (element.getText().equals(city)) {
 				element.click();
 				return;
