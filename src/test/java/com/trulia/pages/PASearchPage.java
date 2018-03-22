@@ -17,7 +17,6 @@ import com.trulia.utilities.Driver;
 public class PASearchPage {
 	private WebDriver driver;
 	String str = "Philadelphia, PA";
-
 	String homePageTitle = "Trulia: Real Estate Listings, Homes For Sale, Housing Data";
 
 	public PASearchPage() {

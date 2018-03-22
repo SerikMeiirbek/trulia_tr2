@@ -16,7 +16,6 @@ import com.trulia.utilities.Driver;
 import com.trulia.utilities.TestBase;
 
 public class SearchFunctionalityTest extends TestBase {
-	WebDriver driver = Driver.getDriver();
 	TruliaPage truliaPage = new TruliaPage();
 	ResultPage resultPage = new ResultPage();
 	String homePageTitle = "Trulia: Real Estate Listings, Homes For Sale, Housing Data";
@@ -28,7 +27,7 @@ public class SearchFunctionalityTest extends TestBase {
 		driver.get(ConfigurationReader.getProperty("url"));
 	}
 
-	// @Test(description = "TC0018")
+	@Test(description = "TC018")
 	public void searchByAddressPositive() {
 		// Step1
 		assertTrue(truliaPage.isAt());
@@ -55,7 +54,7 @@ public class SearchFunctionalityTest extends TestBase {
 		assertTrue(resultPage.houseDetialsText.getText().contains("2 beds"));
 	}
 
-	// @Test(description = "TC0019")
+	@Test(description = "TC019")
 	public void searchByAddressNegative() {
 		// Step1
 		assertTrue(truliaPage.isAt());
@@ -67,13 +66,14 @@ public class SearchFunctionalityTest extends TestBase {
 		// Step2, Step3
 		truliaPage.searchField.clear();
 		assertTrue(truliaPage.searchField.getAttribute("value").equals(""));
-		truliaPage.searchField.sendKeys("100 Hello World" + Keys.ENTER);
+		truliaPage.searchField.sendKeys("100 Hello World");
+		truliaPage.searchButton.click();
 		BrowserUtils.waitForVisibility(resultPage.zeroResults, 5);
 		assertEquals(resultPage.notMatchText.getText(), "Your search does not match any homes.");
 		assertEquals(resultPage.found(), 0);
 	}
 
-	// @Test(description = "TC0020")
+	@Test(description = "TC020")
 	public void searchByNeighborhoodPositive() {
 		// Step1
 		assertTrue(truliaPage.isAt());
@@ -100,7 +100,7 @@ public class SearchFunctionalityTest extends TestBase {
 		assertTrue(resultPage.verifyAutoSuggestions(expected));
 	}
 
-	// @Test(description = "TC0021")
+	@Test(description = "TC021")
 	public void searchByNeighborhoodsNegative() {
 		// Step1
 		assertTrue(truliaPage.isAt());
@@ -119,7 +119,7 @@ public class SearchFunctionalityTest extends TestBase {
 		assertEquals(resultPage.found(), 0);
 	}
 
-	//@Test(description = "TC0014")
+	@Test(description = "TC014")
 	public void searchByCityAndHauseByKeywords() {
 		// Step1
 		assertTrue(truliaPage.isAt());
@@ -147,7 +147,7 @@ public class SearchFunctionalityTest extends TestBase {
 
 	}
 
-	// @Test(description = "TC015")
+	@Test(description = "TC015")
 	public void searchByCityAndHauseByKeywordsNegative() {
 		// Step1
 		assertTrue(truliaPage.isAt());
@@ -174,7 +174,7 @@ public class SearchFunctionalityTest extends TestBase {
 
 	}
 
-	// @Test(description = "TC016")
+	@Test(description = "TC016")
 	public void searchFilterByPriceRange() {
 		// Step1-Step5
 		assertTrue(truliaPage.isAt());

@@ -23,7 +23,7 @@ import com.trulia.utilities.TestBase;
 // Sanjar did Ian's TestCases:
 
 public class SearchingHouses extends TestBase {
-	WebDriver driver = Driver.getDriver();
+	
 	TruliaPage trulia = new TruliaPage();
 	ResultPage resultPage = new ResultPage();
 	String city = "Gaithersburg";

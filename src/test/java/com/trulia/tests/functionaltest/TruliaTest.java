@@ -1,11 +1,9 @@
 package com.trulia.tests.functionaltest;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -42,7 +40,7 @@ public class TruliaTest extends TestBase {
 		assertTrue(trulia.searchField.getAttribute("value").equals(""));
 		trulia.searchField.sendKeys(city);
 		BrowserUtils.waitForVisibility(trulia.searchList, 5);
-		BrowserUtils.waitForTextVisibility(trulia.searchExpected, 2, city);
+		BrowserUtils.waitForTextVisibility(trulia.searchExpected, 5, city);
 		trulia.selectCityOption(city);
 		
 		// Verify all houses are located in Boston, MA

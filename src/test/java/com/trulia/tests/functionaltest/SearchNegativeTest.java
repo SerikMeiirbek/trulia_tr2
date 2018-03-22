@@ -12,6 +12,7 @@ import com.trulia.pages.PASearchPage;
 import com.trulia.pages.ResultPage;
 import com.trulia.utilities.BrowserUtils;
 import com.trulia.utilities.ConfigurationReader;
+import com.trulia.utilities.Driver;
 import com.trulia.utilities.TestBase;
 
 public class SearchNegativeTest extends TestBase {
@@ -19,12 +20,10 @@ public class SearchNegativeTest extends TestBase {
 	ResultPage resultPage = new ResultPage();
 	String city = "Philadelphia, PA";
 	String homePageTitle = "Trulia: Real Estate Listings, Homes For Sale, Housing Data";
-
 	String zipCode = "19116";
 
 	@BeforeMethod
 	public void navigate() {
-
 		driver.get(ConfigurationReader.getProperty("url"));
 	}
 

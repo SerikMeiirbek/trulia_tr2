@@ -3,6 +3,7 @@ package com.trulia.tests.functionaltest;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -11,12 +12,11 @@ import com.trulia.pages.PASearchPage;
 import com.trulia.pages.TruliaPage;
 import com.trulia.utilities.BrowserUtils;
 import com.trulia.utilities.ConfigurationReader;
+import com.trulia.utilities.Driver;
 import com.trulia.utilities.TestBase;
 
 public class SearchPositiveTest extends TestBase{
-	
 	PASearchPage search = new PASearchPage();
-	
 	ResultPage resultPage = new ResultPage();
 	String city = "Philadelphia, PA";	
 	String zipCode = "19116";
