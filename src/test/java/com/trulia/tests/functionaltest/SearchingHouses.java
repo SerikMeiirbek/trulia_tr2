@@ -102,8 +102,8 @@ public class SearchingHouses extends TestBase {
 		BrowserUtils.waitFor(2);
 		assertTrue(driver.getTitle().contains(city));
 
-		assertTrue(resultPage.anyPriceButton.isDisplayed());
-		resultPage.anyPriceButton.click();
+		assertTrue(resultPage.priceToggle.isDisplayed());
+		resultPage.priceToggle.click();
 
 		Select dropdown = new Select(driver.findElement(By.id("minPrice")));
 		dropdown.selectByVisibleText("$50k");

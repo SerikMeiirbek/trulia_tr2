@@ -1,12 +1,15 @@
 package com.trulia.pages;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.trulia.utilities.Driver;
@@ -66,12 +69,28 @@ public class ResultPage {
 	@FindBy(tagName = "h2")
 	public WebElement notMatchText;
 
-	@FindBy(xpath = "//h6[@class='typeLowlight']") // can we put just xpath = "//h6"?
+	@FindBy(xpath = "//h6[@class='typeLowlight']")
 	public WebElement zeroResults;
 
-	@FindBy(id = "priceToggle")
-	public WebElement anyPriceButton;
-	
+	@FindBy(xpath = "//div[@class='typeTruncate typeLowlight']")
+	public List<WebElement> searchedResultAdresses;
+
+	@FindBy(xpath = "//div[@class='plm']//h2")
+	public WebElement result0;
+
+	@FindBy(xpath = "//span[@class='cardPrice h5 man pan typeEmphasize noWrap typeTruncate']")
+	public List<WebElement> listedPrices;
+
+	public WebElement moreToggle;
+
+	public WebElement keywordInput;
+
+	public WebElement priceToggle;
+
+	public WebElement minPrice;
+
+	public WebElement maxPrice;
+
 	public int found() {
 		return Integer.parseInt(zeroResults.getText().substring(0, 1));
 
@@ -113,6 +132,73 @@ public class ResultPage {
 		}
 		return result;
 	}
-	
-		
+
+	public boolean verifySearchedResultAdresses(String city) {
+		boolean result = false;
+
+		for (WebElement element : searchedResultAdresses) {
+			if (element.getText().contains(city)) {
+				result = true;
+			}
+		}
+		return result;
+	}
+
+	public boolean dropDownList(WebElement webElement, String string) {
+
+		Select list = new Select(webElement);
+		try {
+			list.selectByVisibleText(string);
+
+			return true;
+		} catch (NoSuchElementException e) {
+			System.out.println("dropDownn list does not contain " + string);
+		}
+
+		return false;
+
+	}
+
+	public String dropDownListByDefault(WebElement webElement1) {
+
+		Select list = new Select(webElement1);
+		return list.getFirstSelectedOption().getText();
+	}
+
+	public boolean checkPriceRange(List<WebElement> webElements, int i, int k) {
+		List<String> elemTexts = new ArrayList<>();
+		List<String> elemTextOnlyNumbers = new ArrayList<>();
+		String str = "";
+		for (WebElement el : webElements) {
+
+			elemTexts.add(el.getText());
+
+		}
+
+		System.out.println(elemTexts);
+
+		for (String string : elemTexts) {
+			char[] ch = string.toCharArray();
+			for (char c : ch) {
+				if (Character.isDigit(c)) {
+					str += c;
+				}
+
+			}
+			elemTextOnlyNumbers.add(str);
+			str = "";
+
+		}
+
+		for (String string : elemTextOnlyNumbers) {
+			if (Integer.parseInt(string) >= i && Integer.parseInt(string) <= k) {
+				return true;
+			}
+
+		}
+
+		return false;
+
+	}
+
 }

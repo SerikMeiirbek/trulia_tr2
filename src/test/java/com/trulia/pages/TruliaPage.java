@@ -1,6 +1,6 @@
 package com.trulia.pages;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.trulia.utilities.BrowserUtils;
@@ -88,6 +87,20 @@ public class TruliaPage {
 			return false;
 		}
 	}
+	
+	public boolean isButtonClickable(String string) {
+		searchField.clear();
+		BrowserUtils.waitFor(2);
+		
+		searchField.sendKeys(string);
+		
+		try {
+			searchButton.click();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 
 	public boolean verifyTitle(String text) {
@@ -145,23 +158,15 @@ public class TruliaPage {
 			return false;
 		}
 
-	public boolean checkEachWord(String str, WebElement webElement) {
-		String[] arr = str.split(" ");
-		
-		System.out.println(Arrays.toString(arr));
-		
-		if (arr.length > 1) {
-			for (String string : arr) {
-				if (string.toLowerCase().trim().contains(webElement.getText().toLowerCase())) {
-					return true;
-				}
-			}
-		} else if (str.toLowerCase().contains(webElement.getText().toLowerCase().trim())) {
-				return true;
-			}
-
-
-		return false;
+	public String gettitle() {
+		BrowserUtils.waitFor(2);
+		return driver.getTitle();
 	}
-
+	public List<String> listedResuls() {
+		List<String>str= new ArrayList<>(); 
+		for (WebElement webElement : options) {
+			str.add(webElement.getText());
+		}
+		return str;
+	}
 }
