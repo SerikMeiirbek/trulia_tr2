@@ -1,8 +1,8 @@
 package com.trulia.tests.functionaltest;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
-import org.openqa.selenium.By.ByLinkText;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeMethod;
@@ -119,7 +119,7 @@ public class SearchFunctionalityTest extends TestBase {
 		assertEquals(resultPage.found(), 0);
 	}
 
-	 @Test(description = "TC0014")
+	//@Test(description = "TC0014")
 	public void searchByCityAndHauseByKeywords() {
 		// Step1
 		assertTrue(truliaPage.isAt());
@@ -174,7 +174,7 @@ public class SearchFunctionalityTest extends TestBase {
 
 	}
 
-	//@Test(description = "TC016")
+	// @Test(description = "TC016")
 	public void searchFilterByPriceRange() {
 		// Step1-Step5
 		assertTrue(truliaPage.isAt());
@@ -183,42 +183,56 @@ public class SearchFunctionalityTest extends TestBase {
 		assertTrue(truliaPage.searchField.isDisplayed());
 		assertTrue(truliaPage.searchField.isDisplayed());
 
-		//Step6
-		
+		// Step6
+
 		truliaPage.isButtonClickable("Gaithersburg");
-		
-		//Step7
+
+		// Step7
 		assertTrue(truliaPage.gettitle().contains("Gaithersburg"));
-		
-		//Step8
+
+		// Step8
 		assertTrue(resultPage.priceToggle.isDisplayed());
-		
-		//Step9
+
+		// Step9
 		resultPage.priceToggle.click();
 		assertTrue(resultPage.dropDownListByDefault(resultPage.minPrice).contains("No Min"));
 		assertTrue(resultPage.dropDownListByDefault(resultPage.maxPrice).contains("No Max"));
-		
-		//Step10
+
+		// Step10
 		assertTrue(resultPage.dropDownList(resultPage.minPrice, "$20m"));
-		
-		//Step11
+
+		// Step11
 		assertTrue(resultPage.dropDownList(resultPage.minPrice, "$50k"));
-		
+
 		BrowserUtils.waitFor(2);
-		
-		//Step12
+
+		// Step12
 		assertTrue(resultPage.dropDownList(resultPage.maxPrice, "$20m"));
-		
-		//Step13
+
+		// Step13
 		assertTrue(resultPage.dropDownList(resultPage.maxPrice, "$100k"));
-		
-		//Step14
-		
+
+		// Step14
+
 		BrowserUtils.waitFor(4);
 		assertTrue(resultPage.checkPriceRange(resultPage.listedPrices, 50000, 100000));
-		//BrowserUtils.getElementsText(resultPage.listedPrices);
-		
-		//System.out.println(resultPage.checkPriceRange1());
+
 	}
 
+	@Test(description = "TC017")
+		public void searchAndFilterByPriceRange() {
+			// Step1-Step5
+			assertTrue(truliaPage.isAt());
+			assertEquals(driver.getTitle(), homePageTitle);
+			assertTrue(truliaPage.buttonBuy.isDisplayed());
+			assertTrue(truliaPage.searchField.isDisplayed());
+			assertTrue(truliaPage.searchField.isDisplayed());
+
+			//Step6
+			
+			truliaPage.isButtonClickable("Gaithersburg");
+			
+			//Step7
+			assertTrue(truliaPage.gettitle().contains("Gaithersburg"));
+	}
 }
