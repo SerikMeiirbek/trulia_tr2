@@ -37,7 +37,8 @@ public class SearchNegativeTest extends TestBase {
 
 		search.searchField.clear();
 		assertTrue(search.searchField.getAttribute("value").equals(""));
-		search.searchField.sendKeys("Urgench" + Keys.ENTER);
+		search.searchField.sendKeys("Urgench");
+		search.searchButton.click();
 		BrowserUtils.waitForVisibility(resultPage.zeroResults, 5);
 		assertEquals(resultPage.notMatchText.getText(), "Your search does not match any homes.");
 		assertEquals(resultPage.found(), 0);
